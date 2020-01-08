@@ -64,7 +64,9 @@
         "attempt": "attempt",
         "outputs": "outputs",
         "name": "name",
-        "value": "value"
+        "value": "value",
+        "fold": "fold",
+        "unfold": "unfold"
     },
     "fr": {
         "id": "identifiant",
@@ -94,6 +96,7 @@
         "duration": "durée",
         "choose file": "Choisir un fichier ou le glisser le ici...",
         "trigger execution": "Déclencher une execution",
+        "trigger": "Déclencher",
         "triggered": "Déclenchée",
         "topology": "topology",
         "created date": "date de création",
@@ -130,6 +133,9 @@
         "attempt": "essai",
         "outputs": "sorties",
         "name": "nom",
-        "value": "valeur"
+        "value": "valeur",
+        "fold": "replier",
+        "unfold": "déplier"
+
     }
 }

@@ -46,7 +46,9 @@ export default {
     },
     created() {
         if (!this.execution) {
-            this.$store.dispatch("execution/loadExecution", this.$route.params);
+            this.$store.dispatch("execution/loadExecution", this.$route.params).then(() => {
+                this.$store.dispatch("execution/loadTree", this.execution);
+            });
         }
         this.$store
             .dispatch("execution/followExecution", this.$route.params)

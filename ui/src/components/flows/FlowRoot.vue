@@ -18,7 +18,6 @@
     </div>
 </template>
 <script>
-
 import Overview from "./Overview";
 import DataSource from "./DataSource";
 import ExecutionConfiguration from "./ExecutionConfiguration";
@@ -26,7 +25,7 @@ import BottomLine from "../layout/BottomLine";
 import FlowActions from "./FlowActions";
 import Executions from "../executions/Executions";
 import RouteContext from "../../mixins/routeContext";
-
+import { mapState } from "vuex";
 export default {
     mixins: [RouteContext],
     components: {
@@ -38,7 +37,9 @@ export default {
         ExecutionConfiguration
     },
     created() {
-        this.$store.dispatch("flow/loadFlow", this.$route.params);
+        this.$store.dispatch("flow/loadFlow", this.$route.params).then(() => {
+            this.$store.dispatch("flow/loadTree", this.flow);
+        });
     },
     methods: {
         setTab(tab) {
@@ -50,6 +51,7 @@ export default {
         }
     },
     computed: {
+        ...mapState("flow", ["flow"]),
         routeInfo() {
             return {
                 title: this.$route.params.id,
@@ -57,7 +59,7 @@ export default {
                     {
                         label: this.$t("flows"),
                         link: {
-                            name: "flowsList",
+                            name: "flowsList"
                         }
                     },
                     {

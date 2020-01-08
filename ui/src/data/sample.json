@@ -1,0 +1,255 @@
+{
+  "join": {
+    "nodes": [
+      {
+        "task": {
+          "id": "F",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "D",
+            "type": "standard"
+          },
+          {
+            "id": "E",
+            "type": "standard"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "D",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "B",
+            "type": "standard"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "E",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "C",
+            "type": "standard ​"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "B",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "C",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "A",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        }
+      }
+    ]
+  },
+  "seq": {
+    "nodes": [
+      {
+        "task": {
+          "id": "A",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        }
+      },
+      {
+        "task": {
+          "id": "B",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "C",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}",
+          "state": {
+            "current": "FAILED"
+          }
+        },
+        "parent": [
+          {
+            "id": "B",
+            "type": "standard​"
+          }
+        ]
+      }
+    ]
+  },
+  "seq-errors": {
+    "nodes": [
+      {
+        "task": {
+          "id": "A",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        }
+      },
+      {
+        "task": {
+          "id": "EyjafjallajökullEyjafjallajökull",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}",
+          "state": {
+            "current": "RUNNING"
+          }
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard"
+          }
+        ]
+      },
+      {
+        "isFolded":true,
+        "task": {
+          "id": "C",
+          "type": "org.kestra.core.tasks.debugs.Error",
+          "format": "{{task.id}} > {{taskrun.startDate}}",
+          "state": {
+            "current": "FAILED"
+          }
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard​"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "D",
+          "type": "org.kestra.core.tasks.debugs.Error",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "C",
+            "type": "standard​"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "E",
+          "type": "org.kestra.core.tasks.debugs.Error",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "C",
+            "type": "standard​"
+          }
+        ]
+      }
+    ]
+  },
+  "parallel": {
+    "nodes": [
+      {
+        "task": {
+          "id": "A",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        }
+      },
+      {
+        "task": {
+          "id": "B",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "C",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard​"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "D",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard​"
+          }
+        ]
+      },
+      {
+        "task": {
+          "id": "E",
+          "type": "org.kestra.core.tasks.debugs.Return",
+          "format": "{{task.id}} > {{taskrun.startDate}}"
+        },
+        "parent": [
+          {
+            "id": "A",
+            "type": "standard​"
+          }
+        ]
+      }
+    ]
+  }
+}
