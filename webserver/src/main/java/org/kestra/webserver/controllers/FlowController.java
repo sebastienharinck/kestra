@@ -1,7 +1,5 @@
 package org.kestra.webserver.controllers;
 
-import io.micronaut.data.model.Pageable;
-import io.micronaut.data.model.Sort;
 import io.micronaut.http.HttpResponse;
 import io.micronaut.http.HttpStatus;
 import io.micronaut.http.MediaType;
@@ -11,24 +9,37 @@ import io.micronaut.validation.Validated;
 import io.reactivex.Maybe;
 import org.kestra.core.exceptions.InvalidFlowException;
 import org.kestra.core.models.flows.Flow;
+import org.kestra.core.models.hierarchies.FlowTree;
 import org.kestra.core.repositories.FlowRepositoryInterface;
 import org.kestra.core.serializers.Validator;
 import org.kestra.webserver.responses.FlowResponse;
 import org.kestra.webserver.responses.PagedResults;
 import org.kestra.webserver.utils.PageableUtils;
 
-import javax.annotation.Nullable;
-import javax.inject.Inject;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
+import javax.annotation.Nullable;
+import javax.inject.Inject;
 
 @Validated
 @Controller("/api/v1/flows")
 public class FlowController {
     @Inject
     private FlowRepositoryInterface flowRepository;
+
+    /**
+     * @param namespace The flow namespace
+     * @param id        The flow id
+     * @return flow tree found
+     */
+    @Get(uri = "{namespace}/{id}/tree", produces = MediaType.TEXT_JSON)
+    public Maybe<FlowTree> flowTree(String namespace, String id) {
+        return flowRepository
+            .findById(namespace, id)
+            .map(FlowTree::of)
+            .map(Maybe::just)
+            .orElse(Maybe.empty());
+    }
 
     /**
      * @param namespace The flow namespace
