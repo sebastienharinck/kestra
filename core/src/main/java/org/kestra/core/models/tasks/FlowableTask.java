@@ -13,7 +13,7 @@ import java.util.Optional;
 public interface FlowableTask <T extends Output> {
     List<Task> getErrors();
 
-    List<TaskTree> tasksTree(String parentId, Execution execution, List<String> groups);
+    List<TaskTree> tasksTree(String parentId, Execution execution);
 
     List<ResolvedTask> childTasks(RunContext runContext, TaskRun parentTaskRun);
 

@@ -10,13 +10,10 @@ import org.kestra.core.models.annotations.Documentation;
 import org.kestra.core.models.annotations.Example;
 import org.kestra.core.models.executions.Execution;
 import org.kestra.core.models.executions.TaskRun;
-<<<<<<< HEAD
+import org.kestra.core.models.flows.State;
 import org.kestra.core.models.hierarchies.ParentTaskTree;
 import org.kestra.core.models.hierarchies.RelationType;
 import org.kestra.core.models.hierarchies.TaskTree;
-=======
-import org.kestra.core.models.flows.State;
->>>>>>> fix(core): EachSequential will hang forever if empty array
 import org.kestra.core.models.tasks.FlowableTask;
 import org.kestra.core.models.tasks.ResolvedTask;
 import org.kestra.core.models.tasks.VoidOutput;
@@ -57,7 +54,7 @@ public class EachSequential extends Sequential implements FlowableTask<VoidOutpu
     private String value;
 
     @Override
-    public List<TaskTree> tasksTree(String parentId, Execution execution, List<String> groups) {
+    public List<TaskTree> tasksTree(String parentId, Execution execution) {
         return TreeService.sequential(
             this.getTasks(),
             this.errors,
@@ -67,8 +64,7 @@ public class EachSequential extends Sequential implements FlowableTask<VoidOutpu
                 .build()
             ),
             execution,
-            RelationType.DYNAMIC,
-            groups
+            RelationType.DYNAMIC
         );
     }
 

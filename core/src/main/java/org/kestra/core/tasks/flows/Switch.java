@@ -48,7 +48,7 @@ public class Switch extends Task implements FlowableTask<Switch.Output> {
     }
 
     @Override
-    public List<TaskTree> tasksTree(String parentId, Execution execution, List<String> groups) {
+    public List<TaskTree> tasksTree(String parentId, Execution execution) {
         return Stream
             .concat(
                 ImmutableMap.of("defaults", this.defaults).entrySet().stream(),
@@ -65,8 +65,7 @@ public class Switch extends Task implements FlowableTask<Switch.Output> {
                     this.getErrors(),
                     parents,
                     execution,
-                    RelationType.CHOICE,
-                    groups
+                    RelationType.CHOICE
                 ).stream();
             })
             .collect(Collectors.toList());

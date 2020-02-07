@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.util.concurrent.TimeoutException;
 
 import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.hamcrest.Matchers.is;
 
 class FlowTreeTest extends AbstractMemoryRunnerTest {
@@ -21,13 +20,9 @@ class FlowTreeTest extends AbstractMemoryRunnerTest {
 
         assertThat(flowTree.getTasks().size(), is(3));
         assertThat(flowTree.getTasks().get(0).getParent().size(), is(0));
-
         assertThat(flowTree.getTasks().get(1).getParent().size(), is(1));
         assertThat(flowTree.getTasks().get(1).getParent().get(0).getId(), is("date"));
-        assertThat(flowTree.getTasks().get(1).getGroups().size(), is(0));
         assertThat(flowTree.getTasks().get(1).getRelation(), is(RelationType.SEQUENTIAL));
-        assertThat(flowTree.getTasks().get(1).getGroups().size(), is(0));
-
         assertThat(flowTree.getTasks().get(2).getParent().size(), is(1));
         assertThat(flowTree.getTasks().get(2).getParent().get(0).getId(), is("task-id"));
         assertThat(flowTree.getTasks().get(2).getRelation(), is(RelationType.SEQUENTIAL));
@@ -40,20 +35,15 @@ class FlowTreeTest extends AbstractMemoryRunnerTest {
 
         assertThat(flowTree.getTasks().size(), is(11));
 
-        assertThat(flowTree.getTasks().get(5).getTask().getId(), is("1-3-2.seq"));
-        assertThat(flowTree.getTasks().get(5).getGroups(), containsInAnyOrder("1-3-2.seq", "1-3-seq", "1-seq"));
-
         assertThat(flowTree.getTasks().get(6).getTask().getId(), is("1-3-2.1"));
         assertThat(flowTree.getTasks().get(6).getParent().size(), is(1));
         assertThat(flowTree.getTasks().get(6).getParent().get(0).getId(), is("1-3-2.seq"));
         assertThat(flowTree.getTasks().get(6).getRelation(), is(RelationType.SEQUENTIAL));
-        assertThat(flowTree.getTasks().get(7).getGroups(), containsInAnyOrder("1-3-2.seq", "1-3-seq", "1-seq"));
 
         assertThat(flowTree.getTasks().get(7).getTask().getId(), is("1-3-2.2.end"));
         assertThat(flowTree.getTasks().get(7).getParent().size(), is(1));
         assertThat(flowTree.getTasks().get(7).getParent().get(0).getId(), is("1-3-2.1"));
         assertThat(flowTree.getTasks().get(7).getRelation(), is(RelationType.SEQUENTIAL));
-        assertThat(flowTree.getTasks().get(7).getGroups(), containsInAnyOrder("1-3-2.seq", "1-3-seq", "1-seq"));
     }
 
     @Test
@@ -70,9 +60,6 @@ class FlowTreeTest extends AbstractMemoryRunnerTest {
         assertThat(flowTree.getTasks().get(1).getTask().getId(), is("3rd"));
         assertThat(flowTree.getTasks().get(1).getParent().get(0).getId(), is("2nd"));
         assertThat(flowTree.getTasks().get(1).getRelation(), is(RelationType.SEQUENTIAL));
-
-        assertThat(flowTree.getTasks().get(5).getTask().getId(), is("3rd - 1st - 1st - 1st - last"));
-        assertThat(flowTree.getTasks().get(5).getGroups(), containsInAnyOrder("3rd", "3rd - 1st", "3rd - 1st - 1st", "3rd - 1st - 1st - 1st"));
 
         assertThat(flowTree.getTasks().get(6).getTask().getId(), is("failed"));
         assertThat(flowTree.getTasks().get(6).getParent().size(), is(0));
@@ -99,11 +86,9 @@ class FlowTreeTest extends AbstractMemoryRunnerTest {
         assertThat(flowTree.getTasks().get(4).getRelation(), is(RelationType.SEQUENTIAL));
 
         assertThat(flowTree.getTasks().get(6).getTask().getId(), is("error-1st"));
-        assertThat(flowTree.getTasks().get(6).getGroups(), containsInAnyOrder("parent-seq", "3th"));
-
-        assertThat(flowTree.getTasks().get(6).getTask().getId(), is("error-1st"));
         assertThat(flowTree.getTasks().get(6).getParent().get(0).getId(), is("3th"));
         assertThat(flowTree.getTasks().get(6).getRelation(), is(RelationType.ERROR));
+
     }
 
     @Test
@@ -130,7 +115,6 @@ class FlowTreeTest extends AbstractMemoryRunnerTest {
         assertThat(flowTree.getTasks().get(4).getTask().getId(), is("1_2_2-return"));
         assertThat(flowTree.getTasks().get(4).getParent().get(0).getId(), is("1_2_1-return"));
         assertThat(flowTree.getTasks().get(4).getRelation(), is(RelationType.SEQUENTIAL));
-        assertThat(flowTree.getTasks().get(4).getGroups(), containsInAnyOrder("1-each", "1_2-each"));
     }
 
     @Test
@@ -162,7 +146,6 @@ class FlowTreeTest extends AbstractMemoryRunnerTest {
         assertThat(flowTree.getTasks().get(6).getTask().getId(), is("1.each.2"));
         assertThat(flowTree.getTasks().get(6).getParent().get(0).getId(), is("1.each.1"));
         assertThat(flowTree.getTasks().get(6).getParent().get(0).getValue(), is("value 3"));
-        assertThat(flowTree.getTasks().get(6).getRelation(), is(RelationType.SEQUENTIAL));
-        assertThat(flowTree.getTasks().get(6).getGroups(), containsInAnyOrder("1.each"));
+        assertThat(flowTree.getTasks().get(6).getRelation(), is(RelationType.SEQUENTIAL));;
     }
 }

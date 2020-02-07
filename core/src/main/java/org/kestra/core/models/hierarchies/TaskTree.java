@@ -17,8 +17,6 @@ public class TaskTree {
 
     private RelationType relation;
 
-    private List<String> groups;
-
     private List<ParentTaskTree> parent;
 
     @With

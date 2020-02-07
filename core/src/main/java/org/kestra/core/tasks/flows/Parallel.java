@@ -33,7 +33,7 @@ public class Parallel extends Task implements FlowableTask<VoidOutput> {
     private List<Task> errors;
 
     @Override
-    public List<TaskTree> tasksTree(String parentId, Execution execution, List<String> groups) {
+    public List<TaskTree> tasksTree(String parentId, Execution execution) {
         return TreeService.sequential(
             this.tasks,
             this.errors,
@@ -41,8 +41,7 @@ public class Parallel extends Task implements FlowableTask<VoidOutput> {
                 .id(this.getId())
                 .build()
             ),
-            execution,
-            groups
+            execution
         );
     }
 

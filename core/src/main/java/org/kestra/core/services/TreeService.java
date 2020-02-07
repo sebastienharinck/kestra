@@ -25,8 +25,7 @@ public class TreeService {
             errors,
             parents,
             execution,
-            null,
-            new ArrayList<>()
+            null
         );
     }
 
@@ -35,31 +34,13 @@ public class TreeService {
         List<Task> errors,
         List<ParentTaskTree> parents,
         Execution execution,
-        List<String> groups
-    ) {
-        return sequential(
-            tasks,
-            errors,
-            parents,
-            execution,
-            null,
-            groups
-        );
-    }
-
-    public static List<TaskTree> sequential(
-        List<Task> tasks,
-        List<Task> errors,
-        List<ParentTaskTree> parents,
-        Execution execution,
-        RelationType relationType,
-        List<String> groups
+        RelationType relationType
     ) {
         List<TaskTree> result = new ArrayList<>();
 
         // error cases
         if (errors != null && errors.size() > 0) {
-            result.addAll(sequential(errors, parents, RelationType.ERROR, execution, groups));
+            result.addAll(sequential(errors, parents, RelationType.ERROR, execution));
         }
 
         // standard cases
@@ -67,8 +48,7 @@ public class TreeService {
             tasks, parents,
             relationType == null ? RelationType.SEQUENTIAL :
             relationType,
-            execution,
-            groups
+            execution
         ));
 
         return result;
@@ -78,21 +58,18 @@ public class TreeService {
         List<Task> tasks,
         List<ParentTaskTree> parents,
         RelationType relationType,
-        Execution execution,
-        List<String> groups
+        Execution execution
     ) {
         List<TaskTree> result = new ArrayList<>();
 
         for (Task task : tasks) {
             if (task instanceof FlowableTask) {
                 FlowableTask<?> flowableTask = ((FlowableTask<?>) task);
-                (groups = new ArrayList<>(groups)).add(task.getId());
+                result.addAll(toTaskTree(parents, task, relationType, execution));
 
-                result.addAll(toTaskTree(parents, task, relationType, execution, groups));
-
-                result.addAll(flowableTask.tasksTree(task.getId(), execution, groups));
+                result.addAll(flowableTask.tasksTree(task.getId(), execution));
             } else {
-                result.addAll(toTaskTree(parents, task, relationType, execution, groups));
+                result.addAll(toTaskTree(parents, task, relationType, execution));
             }
 
             parents = Collections.singletonList(ParentTaskTree.builder()
@@ -108,15 +85,13 @@ public class TreeService {
         List<ParentTaskTree> parents,
         Task task,
         RelationType relationType,
-        Execution execution,
-        List<String> groups
+        Execution execution
     ) {
         List<TaskRun> taskRuns = execution != null ? execution.findTaskRunsByTaskId(task.getId()) : new ArrayList<>();
 
         if (taskRuns.size() == 0) {
             return Collections.singletonList(TaskTree.builder()
                 .relation(relationType)
-                .groups(groups)
                 .task(task)
                 .parent(parents == null ? new ArrayList<>() : parents)
                 .build()
@@ -127,7 +102,6 @@ public class TreeService {
             .stream()
             .map(taskRun -> TaskTree.builder()
                 .relation(relationType)
-                .groups(groups)
                 .task(task)
                 .taskRun(taskRun)
                 .parent(dynamicParentTaskTrees(parents, taskRun))
